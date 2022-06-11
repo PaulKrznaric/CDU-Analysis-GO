@@ -130,7 +130,7 @@ func CalculateBillingValue(line BillingLine, secondDoctor string, timeIn time.Ti
 func CalculateIndividualBillingValue(billings [7]Billing, timeIn time.Time) [7]Billing {
 	if timeIn.Hour() < 7 {
 		billings[4].SetBilling(1)
-	} else if int(timeIn.Weekday()) >= 5 {
+	} else if int(timeIn.Weekday()) > 5 {
 		billings[3].SetBilling(1)
 	} else if timeIn.Hour() > 17 {
 		billings[2].SetBilling(1)
