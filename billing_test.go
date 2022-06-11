@@ -17,7 +17,6 @@ func RunTestCalculateBilling(t *testing.T, line BillingLine, secondDoctorName st
 	gotBilling, gotMinor := CalculateBillingValue(line, secondDoctorName, line.date, timeOut, timeAdmitted)
 	if gotBilling != expectedBilling {
 		t.Errorf("Got Billing is not the same as expected")
-		t.Errorf("%d", int(timeIn.Weekday()))
 		for i := 0; i < 7; i++ {
 			t.Errorf("Line: %d", i)
 			t.Errorf(gotBilling[i].GetBilling())
@@ -114,4 +113,30 @@ func TestCalculatedBillingOneBilling(t *testing.T) {
 	line.date = timeIn
 	var expectedMinorBilling MinorBillingLine
 	RunTestCalculateBilling(t, line, "", timeIn, timeOut, nil, expectedBilling, expectedMinorBilling)
+}
+
+func TestPrintMinorBilling(t *testing.T) {
+	var line BillingLine
+	line.billingNumber = 123
+	line.doctorName = "Dr. Joe"
+	line.date = time.Date(2022, time.June, 3, 12, 10, 10, 10, time.Local)
+	minorBilling := NewMinorBilling(line, "Dr. Joe", 1)
+	expected := [10]string{"Dr. Joe", "123", line.date.Format("2006-01-02"), "0", "1", "0", "0", "0", "0", "0"}
+	got := minorBilling.PrintBilling()
+	if expected != got {
+		t.Errorf("Expected %v, got %v", expected, got)
+	}
+}
+
+func TestPrintBilling(t *testing.T) {
+	var line BillingLine
+	line.billingNumber = 123
+	line.doctorName = "Dr. Joe"
+	line.date = time.Date(2022, time.June, 3, 12, 10, 10, 10, time.Local)
+	line.billingValues = [7]Billing{NewBilling(1), NewBilling(1), NewBilling(0), NewBilling(0), NewBilling(0), NewBilling(1), NewBilling(0)}
+	expected := [10]string{"Dr. Joe", "123", line.date.Format("2006-01-02"), "1", "1", "0", "0", "0", "1", "0"}
+	got := line.PrintBilling()
+	if expected != got {
+		t.Errorf("Expected %v, got %v", expected, got)
+	}
 }

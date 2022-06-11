@@ -43,8 +43,19 @@ func NewMinorBilling(parentBilling BillingLine, doctorName string, overflow int)
 }
 
 func CreateMinorBillingValue(overflow int) [7]Billing {
-	values := [7]Billing{NewBilling(0), NewBilling(0), NewBilling(overflow), NewBilling(0), NewBilling(0), NewBilling(0), NewBilling(0)}
+	values := [7]Billing{NewBilling(0), NewBilling(overflow), NewBilling(0), NewBilling(0), NewBilling(0), NewBilling(0), NewBilling(0)}
 	return values
+}
+
+func (b *MinorBillingLine) PrintBilling() [10]string {
+	var output [10]string
+	output[0] = b.doctorName
+	output[1] = strconv.Itoa(b.billingNumber)
+	output[2] = b.date.Format("2006-01-02")
+	for i := 0; i < 7; i++ {
+		output[i+3] = b.billingValues[i].GetBilling()
+	}
+	return output
 }
 
 type BillingLine struct {
@@ -138,4 +149,15 @@ func CalculateIndividualBillingValue(billings [7]Billing, timeIn time.Time) [7]B
 		billings[1].SetBilling(1)
 	}
 	return billings
+}
+
+func (b *BillingLine) PrintBilling() [10]string {
+	var output [10]string
+	output[0] = b.doctorName
+	output[1] = strconv.Itoa(b.billingNumber)
+	output[2] = b.date.Format("2006-01-02")
+	for i := 0; i < 7; i++ {
+		output[i+3] = b.billingValues[i].GetBilling()
+	}
+	return output
 }
