@@ -121,7 +121,7 @@ func TestPrintMinorBilling(t *testing.T) {
 	line.doctorName = "Dr. Joe"
 	line.date = time.Date(2022, time.June, 3, 12, 10, 10, 10, time.Local)
 	minorBilling := NewMinorBilling(line, "Dr. Joe", 1)
-	expected := [10]string{"Dr. Joe", "123", line.date.Format("2006-01-02"), "0", "1", "0", "0", "0", "0", "0"}
+	expected := [10]string{"Dr. Joe", "123", line.date.Format("2006-01-02"), "", "1", "", "", "", "", ""}
 	got := minorBilling.PrintBilling()
 	if expected != got {
 		t.Errorf("Expected %v, got %v", expected, got)
@@ -134,7 +134,7 @@ func TestPrintBilling(t *testing.T) {
 	line.doctorName = "Dr. Joe"
 	line.date = time.Date(2022, time.June, 3, 12, 10, 10, 10, time.Local)
 	line.billingValues = [7]Billing{NewBilling(1), NewBilling(1), NewBilling(0), NewBilling(0), NewBilling(0), NewBilling(1), NewBilling(0)}
-	expected := [10]string{"Dr. Joe", "123", line.date.Format("2006-01-02"), "1", "1", "0", "0", "0", "1", "0"}
+	expected := [10]string{"Dr. Joe", "123", line.date.Format("2006-01-02"), "1", "1", "", "", "", "1", ""}
 	got := line.PrintBilling()
 	if expected != got {
 		t.Errorf("Expected %v, got %v", expected, got)
