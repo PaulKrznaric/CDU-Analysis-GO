@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"time"
 
 	"github.com/xuri/excelize/v2"
 )
@@ -67,21 +65,4 @@ func writeLine(line IBillingLine) {
 		tracker.setRow(tracker.row + 2)
 	}
 	tracker.incramentCol()
-}
-
-func dontFormat() {
-	fmt.Println("asdf")
-	excelize.CoordinatesToCellName(tracker.getCurrentRow(), tracker.getCurrentColumn())
-}
-
-func writeOut() {
-	f := excelize.NewFile()
-	file.SetCellValue("Sheet1", "B2", 100)
-	file.SetCellValue("Sheet1", "A1", 50)
-	now := time.Now()
-	file.SetCellValue("Sheet1", "A4", now.Format(time.ANSIC))
-
-	if err := f.SaveAs("test.xlsx"); err != nil {
-		log.Fatal(err)
-	}
 }
