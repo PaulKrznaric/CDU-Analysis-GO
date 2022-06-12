@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory `/Users/paulkrznaric/Documents/Code/CDU-Analysis-GO'
+make: Leaving directory `/Users/paulkrznaric/Documents/Code/CDU-Analysis-GO'
+ 
+Makefile:9: *** missing separator.  Stop.
+

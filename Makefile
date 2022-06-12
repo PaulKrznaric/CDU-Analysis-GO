@@ -1,5 +1,5 @@
 build:
-	go build -o go-cdu.go write.go
+	go build bin/*.go"
 
 run:
-	go run go-cdu.go write.go
+	go run bin/billing.go bin/read.go bin/write.go bin/go-cdu.go 
