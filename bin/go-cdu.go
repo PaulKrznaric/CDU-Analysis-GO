@@ -2,7 +2,9 @@ package main
 
 func main() {
 	//get data
-	readFile()
+	billingGroup := readFile()
+
+	billingGroup.SortBillingLines()
 	//output data
-	export()
+	export(billingGroup)
 }

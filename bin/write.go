@@ -67,9 +67,7 @@ func writeLine(line IBillingLine) {
 	tracker.incramentCol()
 }
 
-func export() {
-	var output BillingGroup
-	//initialize billing lines
+func export(output BillingGroup) {
 
 	//write lines to excel
 	for i := 0; i < len(output.billingLines); i++ {
