@@ -31,7 +31,7 @@ func readFile() BillingGroup {
 			continue
 		}
 		id := row[0]
-		timeIn := createTime(row[2])
+		timeIn := createTime(row[4])
 		primaryDoctor := row[3]
 		secondaryDoctor := row[7]
 		if secondaryDoctor == "." || secondaryDoctor == primaryDoctor {
@@ -73,7 +73,7 @@ func createTime(timeString string) *time.Time {
 func formatDoctor(original string) string {
 	hasPrefix := strings.HasPrefix(original, "N.")
 	if hasPrefix && original != "" {
-		return "DR. " + strings.TrimPrefix(original, "N.")
+		return "DR." + strings.TrimPrefix(original, "N.")
 	}
 	return original
 }
