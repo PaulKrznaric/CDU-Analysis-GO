@@ -66,3 +66,18 @@ func writeLine(line IBillingLine) {
 	}
 	tracker.incramentCol()
 }
+
+func export() {
+	var output BillingGroup
+	//initialize billing lines
+
+	//write lines to excel
+	for i := 0; i < len(output.billingLines); i++ {
+		writeLine(output.billingLines[i])
+	}
+
+	//save excel file
+	if err := file.SaveAs("test.xlsx"); err != nil {
+		log.Fatal(err)
+	}
+}
