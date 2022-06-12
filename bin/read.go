@@ -37,6 +37,9 @@ func readFile() BillingGroup {
 		if secondaryDoctor == "." || secondaryDoctor == primaryDoctor {
 			secondaryDoctor = ""
 		}
+		primaryDoctor = formatDoctor(primaryDoctor)
+		secondaryDoctor = formatDoctor(secondaryDoctor)
+
 		timeOut := createTime(row[8])
 		timeAdmitted := createTime(row[10])
 		if len(row) != 13 {
@@ -65,4 +68,12 @@ func createTime(timeString string) *time.Time {
 	excelEpoch := time.Date(1899, 12, 30, 0, 0, 0, 0, time.UTC)
 	time := excelEpoch.Add(time.Duration(timeInt * float64(24*time.Hour)))
 	return &time
+}
+
+func formatDoctor(original string) string {
+	hasPrefix := strings.HasPrefix(original, "N.")
+	if hasPrefix && original != "" {
+		return "DR. " + strings.TrimPrefix(original, "N.")
+	}
+	return original
 }
