@@ -42,13 +42,30 @@ var (
 )
 
 func init() {
-	tracker = NewExcelTracker(0, 0)
+	tracker = NewExcelTracker(1, 1)
 	file = excelize.NewFile()
 }
 
-func writeLine() {
-	tracker.setRow(0)
-
+func writeLine(line IBillingLine) {
+	tracker.setRow(1)
+	values := line.PrintBilling()
+	for i := 0; i < 4; i++ {
+		currentCell, err := excelize.CoordinatesToCellName(tracker.getCurrentRow(), tracker.getCurrentColumn())
+		if err != nil {
+			log.Fatal(err)
+		}
+		file.SetCellValue("Sheet1", currentCell, values[i])
+		tracker.setRow(tracker.getCurrentRow() + 1)
+	}
+	tracker.setRow(tracker.getCurrentRow() + 1)
+	for i := 4; i < 10; i++ {
+		currentCell, err := excelize.CoordinatesToCellName(tracker.getCurrentRow(), tracker.getCurrentColumn())
+		if err != nil {
+			log.Fatal(err)
+		}
+		file.SetCellValue("Sheet1", currentCell, values[i])
+		tracker.setRow(tracker.row + 2)
+	}
 	tracker.incramentCol()
 }
 
