@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/xuri/excelize/v2"
@@ -12,7 +13,7 @@ import (
 //read an excel file
 func readFile() BillingGroup {
 	//open the file
-	file, err := excelize.OpenFile("/Users/paulkrznaric/Documents/Work/CDU/CDU Details April 2022.xlsx")
+	file, err := excelize.OpenFile("/Users/paulkrznaric/Documents/Work/CDU/CDU Details May 2022.xlsx")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -26,14 +27,14 @@ func readFile() BillingGroup {
 		log.Fatal(err)
 	}
 	for _, row := range rows {
-		if row[0] == "MRN" {
+		if row[0] == "MRN" || strings.Contains(row[0], "***") {
 			continue
 		}
 		id := row[0]
 		timeIn := createTime(row[2])
 		primaryDoctor := row[3]
 		secondaryDoctor := row[7]
-		if secondaryDoctor == "." {
+		if secondaryDoctor == "." || secondaryDoctor == primaryDoctor {
 			secondaryDoctor = ""
 		}
 		timeOut := createTime(row[8])

@@ -14,6 +14,9 @@ type Billing struct {
 }
 
 func (b *Billing) GetBilling() string {
+	if b.count == 0 {
+		return ""
+	}
 	return strconv.Itoa(b.count)
 }
 
