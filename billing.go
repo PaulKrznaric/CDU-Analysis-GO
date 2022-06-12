@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -26,11 +27,32 @@ func NewBilling(count int) Billing {
 	return billing
 }
 
-type MinorBillingLine struct {
+//implement an abstract interface
+type IPrintBilling interface {
+	PrintBilling() [10]string
+}
+
+type IBillingLine struct {
+	IPrintBilling
 	billingNumber int
 	doctorName    string
 	date          time.Time
 	billingValues [7]Billing
+}
+
+func (b *IBillingLine) PrintBilling() [10]string {
+	var output [10]string
+	output[0] = b.doctorName
+	output[1] = strconv.Itoa(b.billingNumber)
+	output[2] = b.date.Format("2006-01-02")
+	for i := 0; i < 7; i++ {
+		output[i+3] = b.billingValues[i].GetBilling()
+	}
+	return output
+}
+
+type MinorBillingLine struct {
+	IBillingLine
 }
 
 func NewMinorBilling(parentBilling BillingLine, doctorName string, overflow int) MinorBillingLine {
@@ -47,22 +69,8 @@ func CreateMinorBillingValue(overflow int) [7]Billing {
 	return values
 }
 
-func (b *MinorBillingLine) PrintBilling() [10]string {
-	var output [10]string
-	output[0] = b.doctorName
-	output[1] = strconv.Itoa(b.billingNumber)
-	output[2] = b.date.Format("2006-01-02")
-	for i := 0; i < 7; i++ {
-		output[i+3] = b.billingValues[i].GetBilling()
-	}
-	return output
-}
-
 type BillingLine struct {
-	billingNumber     int
-	doctorName        string
-	date              time.Time
-	billingValues     [7]Billing
+	IBillingLine
 	associatedBilling MinorBillingLine
 }
 
@@ -151,13 +159,25 @@ func CalculateIndividualBillingValue(billings [7]Billing, timeIn time.Time) [7]B
 	return billings
 }
 
-func (b *BillingLine) PrintBilling() [10]string {
-	var output [10]string
-	output[0] = b.doctorName
-	output[1] = strconv.Itoa(b.billingNumber)
-	output[2] = b.date.Format("2006-01-02")
-	for i := 0; i < 7; i++ {
-		output[i+3] = b.billingValues[i].GetBilling()
+type BillingGroup struct {
+	billingLines []IBillingLine
+}
+
+//create a BillingLine and append it to the billingLines array
+func (b *BillingGroup) AddBillingLine(billingNumber string, doctorName string, secondDoctor string, timeIn time.Time, timeOut time.Time, timeAdmitted *time.Time) {
+	line := NewBillingLine(billingNumber, doctorName, secondDoctor, timeIn, timeOut, timeAdmitted)
+	b.billingLines = append(b.billingLines, line.IBillingLine)
+	if line.associatedBilling.doctorName != "" {
+		b.billingLines = append(b.billingLines, line.associatedBilling.IBillingLine)
 	}
-	return output
+}
+
+//sort BillingGroup Billinglines by doctor then by date
+func (b *BillingGroup) SortBillingLines() {
+	sort.Slice(b.billingLines, func(i, j int) bool {
+		if b.billingLines[i].doctorName == b.billingLines[j].doctorName {
+			return b.billingLines[i].date.Before(b.billingLines[j].date)
+		}
+		return b.billingLines[i].doctorName < b.billingLines[j].doctorName
+	})
 }
