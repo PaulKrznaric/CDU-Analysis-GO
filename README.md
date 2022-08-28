@@ -16,6 +16,7 @@ In order to run this project you'll need to modify the GO Code. [Clone the repo]
 After that you should be able to make run the software. 
 ### Spreadsheet Specifications
 The following will need to be the case for the spreadsheet in order for the calculation to be successful:
+- Any header information's first column should be labled "MDN"
 - Patient ID in column 1 
   - Due to my specific business case, the expected format is as follows (in REGEX): ^J0*\d*$
   - In human readable: 
@@ -31,18 +32,14 @@ The following will need to be the case for the spreadsheet in order for the calc
 - The time the patient left the CDU unit in column 9* 
 - The time the patient was admitted to the hopsital in column 11*
   - If the patient was not admitted, please leave this line blank
--The entire length of the row is 13
+-The entire length of the row is 14
   - This is to catch any issues for _my personal business use_ at runtime
   
 *This is expected in the YYYY-MM-DD H:MM:SS AM/PM format
-| Header 1  | Another header here | This is a long header |
 
-| --------  | ------------------- | --------------------- |
-
-| Some data | Some more data      | data                  | 
-
-| data      | Some long data here | more data             | 
 ### Example:
-| Patient ID | ??? | ??? | Primary Doctor | Patient Time In | ??? | ??? | ??? | Secondary Doctor | Depart CDU Unit Time | ??? | Admitted Time | ??? | ??? |
-|--------------|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
 
+| MDN     | ??? | ??? | Primary Doctor | Patient Time In      | ??? | ??? | ??? | Secondary Doctor | Depart CDU Time      | ??? | Admitted Time        | ??? | ??? |
+|---------|-----|-----|----------------|----------------------|-----|-----|-----|------------------|----------------------|-----|----------------------|-----|-----|
+| J000123 |     |     | Dr. John Doe   | 2022-8-28 2:10:00 PM |     |     |     | Dr. Jane Doe     | 2022-8-28 3:00:00 PM |     | 2022-8-28 2:30:00 PM |     |     |
+Where ??? represents irrelevant data for this import. 
