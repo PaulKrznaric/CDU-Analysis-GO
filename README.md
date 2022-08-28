@@ -1,5 +1,5 @@
 # CDU-Analysis-GO
-This is a project that performs data analysis of a spreadsheet of patient data outputted by an EMR. 
+This is a project that performs data analysis of a spreadsheet of patient data outputted by an EMR and test out the functionality of Github Copilot. 
 The software is able to take in a spreadsheet of the (highly) specific format and output the billing amounts into a format that can 
 then be appended onto the existing spreadsheet format. 
 
@@ -44,3 +44,9 @@ The following will need to be the case for the spreadsheet in order for the calc
 | J000123 |     |     | Dr. John Doe   | 2022-8-28 2:10:00 PM |     |     |     | Dr. Jane Doe     | 2022-8-28 3:00:00 PM |     | 2022-8-28 2:30:00 PM |     |     |
 
 Where ??? represents irrelevant data for this import. 
+
+## Output
+The output will be desposited into a file called `test.xlsx`. If you wish to change the name of the output file you can modify [this line](https://github.com/PaulKrznaric/CDU-Analysis-GO/blob/910bc6086a8b5d3c1a64cbc364c2b85da7f0581a/bin/write.go#L78) to do so. 
+
+## Tests
+Tests are present for key business case specific uses that would otherwise require manual verification. They cannot be run via the makefile and should instead be instantiated either using the CLI or via an IDE. 
