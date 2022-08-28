@@ -42,4 +42,5 @@ The following will need to be the case for the spreadsheet in order for the calc
 | MDN     | ??? | ??? | Primary Doctor | Patient Time In      | ??? | ??? | ??? | Secondary Doctor | Depart CDU Time      | ??? | Admitted Time        | ??? | ??? |
 |---------|-----|-----|----------------|----------------------|-----|-----|-----|------------------|----------------------|-----|----------------------|-----|-----|
 | J000123 |     |     | Dr. John Doe   | 2022-8-28 2:10:00 PM |     |     |     | Dr. Jane Doe     | 2022-8-28 3:00:00 PM |     | 2022-8-28 2:30:00 PM |     |     |
+
 Where ??? represents irrelevant data for this import. 
